@@ -75,7 +75,7 @@ export class Service{
                 slug
             
             )
-        } catch (error) { 
+        } catch (error) {
             console.log("Appwrite serive :: getPost :: error", error);
             return false
         }
@@ -134,4 +134,4 @@ export class Service{
 
 
 const service = new Service()
-export default service
+export default service 
