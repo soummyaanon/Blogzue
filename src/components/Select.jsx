@@ -1,8 +1,6 @@
-/* eslint-disable react-refresh/only-export-components */
-/* eslint-disable react/prop-types */
 import React, {useId} from 'react'
 
-export function Select({
+function Select({
     options,
     label,
     className,
