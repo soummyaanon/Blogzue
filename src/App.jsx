@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import './App.css'
@@ -20,7 +21,7 @@ function App() {
       }
     })
     .finally(() => setLoading(false))
-  }, [])
+  }, [dispatch])
   
   return !loading ? (
     <div className='min-h-screen flex flex-wrap content-between bg-gray-400'>

@@ -16,11 +16,8 @@ export default function RTE({name, control, label, defaultValue =""}) {
         initialValue={defaultValue}
         apiKey='cysay5ixt00oadcte5n5u68cfgd0wdn7ta5fdg3aic26mvzl'
         init={{
-          
             initialValue: defaultValue,
             height: 300,
-            width: "100%",
-            
             menubar: true,
             plugins: [
                 "image",
@@ -56,4 +53,3 @@ export default function RTE({name, control, label, defaultValue =""}) {
      </div>
   )
 }
-
