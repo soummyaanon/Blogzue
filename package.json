@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@nextui-org/react": "^2.3.5",
     "@reduxjs/toolkit": "^2.2.2",
     "@tinymce/tinymce-react": "^5.0.0",
     "appwrite": "^13.0.2",
