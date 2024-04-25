@@ -4,6 +4,8 @@ import { Button, Input, RTE, Select } from "..";
 import appwriteService from "../../appwrite/config";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import {FaPaperPlane} from 'react-icons/fa';
+import { Button as MaterialButton } from "@material-tailwind/react";
 
 export default function PostForm({ post }) {
     const { register, handleSubmit, watch, setValue, control, getValues } = useForm({
@@ -37,7 +39,7 @@ export default function PostForm({ post }) {
         } else {
             const file = await appwriteService.uploadFile(data.image[0]);
 
-            if (file && userData) {
+            if (file) {
                 const fileId = file.$id;
                 data.featuredImage = fileId;
                 const dbPost = await appwriteService.createPost({ ...data, userId: userData.$id });
@@ -71,18 +73,24 @@ export default function PostForm({ post }) {
     }, [watch, slugTransform, setValue]);
 
     return (
-        <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
-            <div className="w-2/3 px-2">
-                <Input
-                    label="Title :"
+        <form onSubmit={handleSubmit(submit)} className="flex flex-wrap bg-indigo-100 border-2 border-indigo-500 shadow-md rounded-lg p-6 justify-start">
+            <div className="w-full md:w-2/3 px-2 mb-4 md:mb-0">
+                <label className="block text-indigo-700 text-sm font-bold mb-2 text-left" htmlFor="title">
+                    Title
+                </label>
+                <input
+                    id="title"
                     placeholder="Title"
-                    className="mb-4"
+                    className="shadow appearance-none border border-indigo-500 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     {...register("title", { required: true })}
                 />
-                <Input
-                    label="Slug :"
+                <label className="block text-indigo-700 text-sm font-bold mb-2 mt-4 text-left" htmlFor="slug">
+                    Slug
+                </label>
+                <input
+                    id="slug"
                     placeholder="Slug"
-                    className="mb-4"
+                    className="shadow appearance-none border border-indigo-500 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     {...register("slug", { required: true })}
                     onInput={(e) => {
                         setValue("slug", slugTransform(e.currentTarget.value), { shouldValidate: true });
@@ -90,16 +98,19 @@ export default function PostForm({ post }) {
                 />
                 <RTE label="Content :" name="content" control={control} defaultValue={getValues("content")} />
             </div>
-            <div className="w-1/3 px-2">
-                <Input
-                    label="Featured Image :"
+            <div className="w-full md:w-1/3 px-2">
+                <label className="block text-indigo-700 text-sm font-bold mb-2 text-left" htmlFor="image">
+                    Featured Image
+                </label>
+                <input
+                    id="image"
                     type="file"
-                    className="mb-4"
+                    className="shadow appearance-none border border-indigo-500 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     accept="image/png, image/jpg, image/jpeg, image/gif"
                     {...register("image", { required: !post })}
                 />
                 {post && (
-                    <div className="w-full mb-4">
+                    <div className="w-full mb-4 mt-4">
                         <img
                             src={appwriteService.getFilePreview(post.featuredImage)}
                             alt={post.title}
@@ -107,15 +118,20 @@ export default function PostForm({ post }) {
                         />
                     </div>
                 )}
-                <Select
-                    options={["active", "inactive"]}
-                    label="Status"
-                    className="mb-4"
+                <label className="block text-indigo-700 text-sm font-bold mb-2 mt-4 text-left" htmlFor="status">
+                    Status
+                </label>
+                <select
+                    id="status"
+                    className="shadow appearance-none border border-indigo-500 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     {...register("status", { required: true })}
-                />
-                <Button type="submit" bgColor={post ? "bg-green-500" : undefined} className="w-full">
-                    {post ? "Update" : "Submit"}
-                </Button>
+                >
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+<button type="submit" className="bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-700 hover:to-indigo-700 active:from-blue-800 active:to-indigo-800 text-white font-bold py-2 px-4 rounded mt-4 w-auto transition duration-150 ease-in-out transform active:scale-90">
+  {post ? "Update" : "Submit"} <FaPaperPlane className="ml-2" />
+</button>
             </div>
         </form>
     );

@@ -38,5 +38,13 @@
 }
 
 .read-the-docs {
-  color: #888;
+  color: #050101;
+}
+body {
+  position: relative;
+  min-height: 100vh;
+  padding-bottom: 2rem; /* height of the footer */
+}
+.neon-shadow {
+  box-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 15px #00ff00, 0 0 20px #00ff00;
 }

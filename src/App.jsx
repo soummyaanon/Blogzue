@@ -24,15 +24,17 @@ function App() {
   }, [dispatch])
   
   return !loading ? (
-    <div className='min-h-screen flex flex-wrap content-between bg-gradient-to-r from-blue-200 via-white to-pink-200'>
-    <div className='w-full block'>
-        <Header />
-        <main>
-          <Outlet />
-        </main>
-        <Footer />
+    <>
+      <div className='min-h-screen flex flex-wrap content-between bg-black'>
+        <div className='w-full block'>
+          <Header />
+          <main>
+            <Outlet />
+          </main>
+          <Footer />
+        </div>
       </div>
-    </div>
+    </>
   ) : null
 }
 
