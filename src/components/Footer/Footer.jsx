@@ -14,7 +14,7 @@ function Footer() {
                     </div>
                     <div>
                         <p className="text-sm">
-                            &copy; Copyright 2023. All Rights Reserved by @soummyaanon.
+                            &copy; Copyright 2024. All Rights Reserved by @soummyaanon.
                         </p>
                     </div>
                 </div>
@@ -22,7 +22,7 @@ function Footer() {
             <div className="w-full p-6 md:w-1/2 lg:w-7/12">
                 <div className="h-full">
                     <h3 className="tracking-px mb-9 text-xs font-semibold uppercase">
-                        Follow Us
+                        Follow Me
                     </h3>
           <ul>
     <li className="mb-4">
