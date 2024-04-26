@@ -3,7 +3,7 @@ import logo from '../assets/mylogo.svg'; // adjust the path to match your file s
 
 function Logo() {
   return (
-    <img src={logo} alt="Logo" className="w-16 h-auto transition duration-500 ease-in-out transform hover:scale-110" />
+    <img src={logo} alt="Logo" className="w-20 h-auto transition duration-500 ease-in-out transform hover:scale-125 animate-pulse" />
   )
 }
 

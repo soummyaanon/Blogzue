@@ -25,15 +25,15 @@ function App() {
   
   return !loading ? (
     <>
-      <div className='min-h-screen flex flex-wrap content-between bg-black'>
-        <div className='w-full block'>
-          <Header />
-          <main>
-            <Outlet />
-          </main>
-          <Footer />
-        </div>
-      </div>
+<div className='min-h-screen flex flex-col justify-between bg-gray-900 text-gray-200'>
+  <div className='w-full block'>
+    <Header className='text-2xl font-bold p-4  transition-colors duration-200' />
+    <main className='px-4 py-8'>
+      <Outlet />
+    </main>
+    <Footer className='text-sm p-4 bg-gray-800 hover:text-white transition-colors duration-200' />
+  </div>
+</div>
     </>
   ) : null
 }

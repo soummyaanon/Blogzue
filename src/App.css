@@ -1,10 +1,9 @@
 body {
   position: relative;
-  min-height: 100vh;
+  height: 100vh;
   padding: 2rem;
   text-align: center;
 }
-
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -17,7 +16,7 @@ body {
 }
 
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+  filter: drop-shadow(0 0 2em #0711d2aa);
   transform: rotate(360deg);
 }
 
@@ -42,4 +41,7 @@ body {
   .card {
     padding: 1em;
   }
+}
+.slow {
+  animation-duration: 1ms;
 }

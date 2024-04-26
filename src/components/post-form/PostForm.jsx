@@ -105,6 +105,7 @@ export default function PostForm({ post }) {
                     id="image"
                     type="file"
                     className="shadow appearance-none border border-indigo-500 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    
                     accept="image/png, image/jpg, image/jpeg, image/gif"
                     {...register("image", { required: !post })}
                 />
