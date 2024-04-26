@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FaPlus } from 'react-icons/fa';
+import { FaPlus ,} from 'react-icons/fa';
 import appwriteService from '../appwrite/config';
 import Container from '../components/container/Container';
 
@@ -23,17 +23,18 @@ function Home() {
 
   if (posts.length === 0) {
     return (
-      <div className="w-full py-8 mt-4 text-center">
-        <Container>
-          <div className="flex flex-wrap">
-            <div className="p-2 w-full">
-              <h1 className="text-2xl font-bold hover:text-gray-500">
-                Login to read posts
-              </h1>
-            </div>
-          </div>
-        </Container>
-      </div>
+<div className="w-full py-8 mt-4 md-6 text-center bg-black">
+    <div className="w-72 mx-auto transform-gpu hover:scale-105 transition-transform duration-300 ease-in-out bg-black shadow-lg rounded-lg overflow-hidden p-4 border-4 border-purple-500 border-opacity-75">
+        <div className="p-2 w-full text-center">
+            <h1 className="text-xl font-bold text-white">
+                "The best way to become a successful blogger is to always be learning."
+            </h1>
+            <p className="mt-4 text-white text-lg font-semibold tracking-wide italic">
+                "Sign up today and join our community of passionate bloggers. Unleash your creativity, share your thoughts, and connect with like-minded individuals. Your blogging journey starts here."
+            </p>
+        </div>
+    </div>
+</div>
     );
   }
 
@@ -41,7 +42,7 @@ function Home() {
     <div>
       <div className='w-full py-8'></div>
       <Container>
-      <h1 className='text-2xl font-bold text-white italic'>Categories</h1>
+     <h1 className='text-2xl font-bold text-white italic'>Categories</h1>
         <div className='w-full py-8'></div>
         <div className='flex flex-wrap justify-center'>
           <div className='p-2 w-1/4'>
@@ -81,10 +82,10 @@ function Home() {
             </div>
           </div>
         </div>
-<div className='flex justify-center mt-4'>
-  <Link to='/add-post' className='px-4 py-2 rounded flex items-center bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:from-blue-700 hover:to-blue-500 transition duration-500'>
-    <FaPlus className='mr-2 animate-spin' /> Add Post
-  </Link>
+<div className='flex justify-center mt-4 mb-10'>
+    <Link to='/add-post' className='bg-gradient-to-r from-gray-500 to-gray-900 text-white px-6 py-3 rounded flex items-center transform hover:scale-110 transition-transform duration-500 ease-in-out shadow-lg'>
+        <FaPlus className='mr-2 transform hover:rotate-180 transition-transform duration-500 ease-in-out' /> Add Post
+    </Link>
 </div>
       </Container>
     </div>

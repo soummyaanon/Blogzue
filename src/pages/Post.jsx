@@ -4,6 +4,7 @@ import appwriteService from "../appwrite/config";
 import { Button, Container } from "../components";
 import parse from "html-react-parser";
 import { useSelector } from "react-redux";
+import { FaEdit, FaTrash } from 'react-icons/fa';
 
 export default function Post() {
     const [post, setPost] = useState(null);
@@ -34,34 +35,39 @@ export default function Post() {
 
     return post ? (
         <div className="py-8">
-            <Container>
-                <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
-                    <img
-                        src={appwriteService.getFilePreview(post.featuredImage)}
-                        alt={post.title}
-                        className="rounded-xl"
-                    />
-
-                    {isAuthor && (
-                        <div className="absolute right-6 top-6">
-                            <Link to={`/edit-post/${post.$id}`}>
-                                <Button bgColor="bg-green-500" className="mr-3">
-                                    Edit
-                                </Button>
-                            </Link>
-                            <Button bgColor="bg-red-500" onClick={deletePost}>
-                                Delete
-                            </Button>
-                        </div>
-                    )}
-                </div>
-                <div className="w-full mb-6">
-                    <h1 className="text-2xl font-bold">{post.title}</h1>
-                </div>
-                <div className="browser-css">
-                    {parse(post.content)}
-                    </div>
-            </Container>
+<Container>
+    <div className="relative flex justify-between mb-4 border rounded-xl p-2 bg-black text-white">
+        <div className="w-1/2">
+            <img
+                src={appwriteService.getFilePreview(post.featuredImage)}
+                alt={post.title}
+                className="rounded-xl w-full"
+            />
         </div>
-    ) : null;
+
+<div className="w-1/2 pl-4">
+    <div className="w-full mb-6">
+        <h1 className="text-2xl font-bold">{post?.title}</h1>
+    </div>
+    <div className="browser-css">
+        {typeof post?.content === 'string' ? parse(post.content) : null}
+    </div>
+</div>
+
+{isAuthor && post && deletePost && (
+    <div className="absolute bottom-0 right-0 mb-4 mr-4 flex">
+        <Link to={`/edit-post/${post.$id}`}>
+            <Button className="mr-3 bg-black text-white border border-white hover:bg-white hover:text-black transition-all duration-500 ease-in-out flex items-center justify-center">
+                <FaEdit />
+            </Button>
+        </Link>
+        <Button onClick={deletePost} className="bg-black text-white border border-white hover:bg-white hover:text-black transition-all duration-500 ease-in-out flex items-center justify-center">
+            <FaTrash />
+        </Button>
+    </div>
+)}
+</div>
+</Container>
+</div>
+) : null;
 }

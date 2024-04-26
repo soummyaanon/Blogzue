@@ -26,63 +26,61 @@ function Signup() {
         }
     }
 
-  return (
-    <div className="flex items-center justify-center">
-            <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
+return (
+    <div className="flex items-center justify-center bg-black min-h-screen">
+        <div className="mx-auto w-96 rounded-xl p-10 border-4 border-gray-700 border-opacity-75 shadow-lg bg-gray-800">
             <div className="mb-2 flex justify-center">
-                    <span className="inline-block w-full max-w-[100px]">
-                        <Logo width="100%" />
-                    </span>
-                </div>
-                <h2 className="text-center text-2xl font-bold leading-tight">Sign up to create account</h2>
-                <p className="mt-2 text-center text-base text-black/60">
-                    Already have an account?&nbsp;
-                    <Link
-                        to="/login"
-                        className="font-medium text-primary transition-all duration-200 hover:underline"
-                    >
-                        Sign In
-                    </Link>
-                </p>
-                {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
-
-                <form onSubmit={handleSubmit(create)}>
-                    <div className='space-y-5'>
-                        <Input
-                        label="Full Name: "
-                        placeholder="Enter your full name"
-                        {...register("name", {
-                            required: true,
-                        })}
-                        />
-                        <Input
-                        label="Email: "
-                        placeholder="Enter your email"
-                        type="email"
-                        {...register("email", {
-                            required: true,
-                            validate: {
-                                matchPatern: (value) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
-                                "Email address must be a valid address",
-                            }
-                        })}
-                        />
-                        <Input
-                        label="Password: "
-                        type="password"
-                        placeholder="Enter your password"
-                        {...register("password", {
-                            required: true,})}
-                        />
-                        <Button type="submit" className="w-full">
-                            Create Account
-                        </Button>
-                    </div>
-                </form>
+                <span className="inline-block w-full max-w-[100px]">
+                    <Logo width="100%" />
+                </span>
             </div>
+            <h2 className="text-center text-2xl font-bold leading-tight text-white">Join Our Community</h2>
+            <p className="mt-2 text-center text-base text-gray-400">
+                Already have an account?&nbsp;
+                <Link
+                    to="/login"
+                    className="font-medium text-blue-500 transition-all duration-200 hover:underline"
+                >
+                    Sign In
+                </Link>
+            </p>
+            {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
 
+            <form onSubmit={handleSubmit(create)} className="space-y-5 mt-8">
+                <Input
+                    label={<label className="text-white font-bold">Full Name: </label>}
+                    placeholder="Enter your full name"
+                    {...register("name", {
+                        required: true,
+                    })}
+                />
+                <Input
+                    label={<label className="text-white font-bold">Email: </label>}
+                    placeholder="Enter your email"
+                    type="email"
+                    {...register("email", {
+                        required: true,
+                        validate: {
+                            matchPatern: (value) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
+                            "Email address must be a valid address",
+                        }
+                    })}
+                />
+                <Input
+                    label={<label className="text-white font-bold">Password: </label>}
+                    type="password"
+                    placeholder="Enter your password"
+                    {...register("password", {
+                        required: true,
+                    })}
+                />
+                <Button type="submit" className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Create Account
+                </Button>
+            </form>
+        </div>
     </div>
-  )
+)
 }
 
 export default Signup
