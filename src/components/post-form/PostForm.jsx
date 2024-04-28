@@ -1,11 +1,10 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button, Input, RTE, Select } from "..";
 import appwriteService from "../../appwrite/config";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import {FaPaperPlane} from 'react-icons/fa';
-import { Button as MaterialButton } from "@material-tailwind/react";
+import { FaPaperPlane, FaSpinner } from 'react-icons/fa'; // Import spinner icon
 
 export default function PostForm({ post }) {
     const { register, handleSubmit, watch, setValue, control, getValues } = useForm({
@@ -19,8 +18,10 @@ export default function PostForm({ post }) {
 
     const navigate = useNavigate();
     const userData = useSelector((state) => state.auth.userData);
+    const [isLoading, setIsLoading] = useState(false);
 
     const submit = async (data) => {
+        setIsLoading(true);
         if (post) {
             const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
 
@@ -49,6 +50,7 @@ export default function PostForm({ post }) {
                 }
             }
         }
+        setIsLoading(false);
     };
 
     const slugTransform = useCallback((value) => {
@@ -71,6 +73,7 @@ export default function PostForm({ post }) {
 
         return () => subscription.unsubscribe();
     }, [watch, slugTransform, setValue]);
+
     return (
         <form onSubmit={handleSubmit(submit)} className="flex flex-wrap bg-indigo-100 border-2 border-indigo-500 shadow-md rounded-lg p-6 justify-start">
             <div className="w-full md:w-2/3 px-2 mb-4 md:mb-0">
@@ -129,9 +132,9 @@ export default function PostForm({ post }) {
                     <option value="active">Active</option>
                     <option value="inactive">Inactive</option>
                 </select>
-<button type="submit" className="bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-700 hover:to-indigo-700 active:from-blue-800 active:to-indigo-800 text-white font-bold py-2 px-4 rounded mt-4 w-auto transition duration-150 ease-in-out transform active:scale-90">
-  {post ? "Update" : "Submit"} <FaPaperPlane className="ml-2" />
-</button>
+                <button type="submit" className="bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-700 hover:to-indigo-700 active:from-blue-800 active:to-indigo-800 text-white font-bold py-2 px-4 rounded mt-4 w-auto transition duration-150 ease-in-out transform active:scale-90">
+                {isLoading ? <FaSpinner className="animate-spin" /> : (post ? "Update" : "Submit")} <FaPaperPlane className="ml-2" />
+            </button>
             </div>
         </form>
     );
