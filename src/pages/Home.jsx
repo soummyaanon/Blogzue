@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FaPlus ,} from 'react-icons/fa';
+import { FaPlus, FaSpinner } from 'react-icons/fa';
 import appwriteService from '../appwrite/config';
 import Container from '../components/container/Container';
-
-
 
 // Import the images
 import technologiesImg from '../assets/tech.png';
@@ -14,17 +12,26 @@ import scienceImg from '../assets/science.png';
 import f1img from '../assets/big-smile.webp';
 import f2img from '../assets/face_smiling@2x.webp';
 
-
 function Home() {
   const [posts, setPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     appwriteService.getPosts().then((posts) => {
       if (posts) {
         setPosts(posts.documents);
       }
+      setIsLoading(false);
     });
   }, []);
+
+if (isLoading) {
+  return (
+    <div className="flex items-center justify-center h-screen">
+      <FaSpinner className="animate-spin text-6xl text-blue-500" />
+    </div>
+  );
+}
 
   if (posts.length === 0) {
     return (

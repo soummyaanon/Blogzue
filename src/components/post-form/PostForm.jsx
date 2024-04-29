@@ -4,7 +4,9 @@ import { Button, Input, RTE, Select } from "..";
 import appwriteService from "../../appwrite/config";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { FaPaperPlane, FaSpinner } from 'react-icons/fa'; // Import spinner icon
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+import { FaPaperPlane, FaSpinner,FaEdit,} from 'react-icons/fa'; // Import spinner icon
 
 export default function PostForm({ post }) {
     const { register, handleSubmit, watch, setValue, control, getValues } = useForm({
@@ -19,8 +21,10 @@ export default function PostForm({ post }) {
     const navigate = useNavigate();
     const userData = useSelector((state) => state.auth.userData);
     const [isLoading, setIsLoading] = useState(false);
+    const [isOpen, setIsOpen] = useState(false)
 
     const submit = async (data) => {
+        setIsOpen(true);
         setIsLoading(true);
         if (post) {
             const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
@@ -51,6 +55,7 @@ export default function PostForm({ post }) {
             }
         }
         setIsLoading(false);
+        setIsOpen(false);
     };
 
     const slugTransform = useCallback((value) => {
@@ -132,12 +137,15 @@ export default function PostForm({ post }) {
                     <option value="active">Active</option>
                     <option value="inactive">Inactive</option>
                 </select>
-<button type="submit" className="relative flex justify-center items-center bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-700 hover:to-indigo-700 active:from-blue-800 active:to-indigo-800 text-white font-bold py-2 px-4 rounded mt-4 w-auto transition duration-150 ease-in-out transform active:scale-90">
+<button type="submit" onClick={handleSubmit(submit)} className="relative flex justify-center items-center bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-700 hover:to-indigo-700 active:from-blue-800 active:to-indigo-800 text-white font-bold py-2 px-4 rounded mt-4 w-auto transition duration-150 ease-in-out transform hover:scale-105 active:scale-90">
   {isLoading && <FaSpinner className="absolute animate-spin" />}
-  <span className={isLoading ? 'opacity-0' : 'opacity-100'}>
-    {post ? "Update" : "Submit"} <FaPaperPlane className="ml-2" />
-  </span>
+  {!isLoading && (post ? <FaEdit className="ml-2" /> : <FaPaperPlane className="ml-2" />)}
 </button>
+<Popup open={isOpen} modal closeOnDocumentClick={false}>
+  <div style={{ backdropFilter: 'blur(20px)' }} className="flex items-center justify-center p-8 border-4 border-blue-500 rounded-lg">
+    <FaSpinner className="animate-spin text-blue-500 mr-2" /> Submitting...
+  </div>
+</Popup>
             </div>
         </form>
     );
