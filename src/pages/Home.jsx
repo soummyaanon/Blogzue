@@ -11,6 +11,7 @@ import lifestyleImg from '../assets/lifestyle.png';
 import scienceImg from '../assets/science.png';
 import f1img from '../assets/big-smile.webp';
 import f2img from '../assets/face_smiling@2x.webp';
+import '../../src/Home.css';
 
 function Home() {
   const [posts, setPosts] = useState([]);
@@ -35,7 +36,7 @@ if (isLoading) {
 
   if (posts.length === 0) {
     return (
-      <div className="w-full py-8 mt-4 md-6 text-center bg-black">
+      <div className="w-full py-8 mt-4 md-6 text-center bg-gray-900 slide-in-right">
       <div className="mx-auto p-4 text-center font-serif">
           <h1 className="text-2xl font-bold text-white">
               "Become a successful blogger. Blogging is a great way to express your thoughts, share your knowledge with the world, and make a difference in people's lives. It can also be a profitable business if done right."
