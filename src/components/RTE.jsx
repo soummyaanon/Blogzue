@@ -1,18 +1,13 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import { Editor } from '@tinymce/tinymce-react';
 import { Controller } from 'react-hook-form';
 
 export default function RTE({ name, control, label, defaultValue = "" }) {
-  const [charCount, setCharCount] = useState(0);
-  const editorRef = useRef(null);
+  const [wordCount, setWordCount] = useState(0);
 
   const handleEditorChange = (content) => {
-    const chars = content.length;
-    setCharCount(chars);
-
-    if (chars > 255 && editorRef.current) {
-      editorRef.current.setMode('readonly');
-    }
+    const words = content.trim().split(/\s+/).length;
+    setWordCount(words);
   }
 
   return (
@@ -56,7 +51,6 @@ export default function RTE({ name, control, label, defaultValue = "" }) {
                 "undo redo | blocks | image | bold italic forecolor | alignleft aligncenter bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent |removeformat | help",
               content_style: "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }"
             }}
-            onInit={(event, editor) => editorRef.current = editor}
             onEditorChange={(content) => {
               handleEditorChange(content);
               onChange(content);
@@ -65,7 +59,7 @@ export default function RTE({ name, control, label, defaultValue = "" }) {
         )}
       />
 
-      <p className='text-sm text-red-500'>{charCount > 255 ? 'Only 255 characters are allowed' : null}</p>
+      <p className='text-sm text-red-500'>{wordCount > 30 ? 'Only 30 words are allowed' : null}</p>
     </div>
   )
 }
