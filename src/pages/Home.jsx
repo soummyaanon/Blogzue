@@ -34,15 +34,15 @@ if (isLoading) {
   );
 }
 
-  if (posts.length === 0) {
+if (posts.length === 0) {
     return (
       <div className="w-full py-8 mt-4 md-6 text-center bg-gray-900 slide-in-right">
       <div className="mx-auto p-4 text-center font-serif">
           <h1 className="text-2xl font-bold text-white">
-              "Become a successful blogger. Blogging is a great way to express your thoughts, share your knowledge with the world, and make a difference in people's lives. It can also be a profitable business if done right."
+          "Welcome to BLOGZUE YOUR SHORT BLOGER! Share your thoughts and make a difference in concise ways."
           </h1>
           <p className="mt-4 text-white text-lg font-semibold tracking-wide italic">
-              "Join our community, share your thoughts, and start your blogging journey. 'The journey of a thousand miles begins with a single step.' - Lao Tzu"
+              "Join our community, share your thoughts, and start your blogging journey. 'Brevity is the soul of wit.' - William Shakespeare"
           </p>
           <Link to="/signup" className="mt-4 inline-block bg-gray-800 text-white px-6 py-2 rounded font-bold text-lg border-2 border-white hover:bg-gray-700 transition-colors duration-300 ease-in-out transform hover:scale-110">
               Get Started
