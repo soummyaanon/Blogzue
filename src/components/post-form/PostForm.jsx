@@ -24,39 +24,47 @@ export default function PostForm({ post }) {
     const [isOpen, setIsOpen] = useState(false)
 
     const submit = async (data) => {
-        setIsOpen(true);
-        setIsLoading(true);
-        if (post) {
-            const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
+  // Check if all required fields are filled
+  if (!data.title || !data.slug || !data.content || !data.status || !data.image[0]) {
+    window.alert('Please fill all required fields.');
+    return;
+  }
 
-            if (file) {
-                appwriteService.deleteFile(post.featuredImage);
-            }
+  setIsOpen(true);
+  setIsLoading(true);
 
-            const dbPost = await appwriteService.updatePost(post.$id, {
-                ...data,
-                featuredImage: file ? file.$id : undefined,
-            });
+  if (post) {
+    const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
 
-            if (dbPost) {
-                navigate(`/post/${dbPost.$id}`);
-            }
-        } else {
-            const file = await appwriteService.uploadFile(data.image[0]);
+    if (file) {
+      appwriteService.deleteFile(post.featuredImage);
+    }
 
-            if (file) {
-                const fileId = file.$id;
-                data.featuredImage = fileId;
-                const dbPost = await appwriteService.createPost({ ...data, userId: userData.$id });
+    const dbPost = await appwriteService.updatePost(post.$id, {
+      ...data,
+      featuredImage: file ? file.$id : undefined,
+    });
 
-                if (dbPost) {
-                    navigate(`/post/${dbPost.$id}`);
-                }
-            }
-        }
-        setIsLoading(false);
-        setIsOpen(false);
-    };
+    if (dbPost) {
+      navigate(`/post/${dbPost.$id}`);
+    }
+  } else {
+    const file = await appwriteService.uploadFile(data.image[0]);
+
+    if (file) {
+      const fileId = file.$id;
+      data.featuredImage = fileId;
+      const dbPost = await appwriteService.createPost({ ...data, userId: userData.$id });
+
+      if (dbPost) {
+        navigate(`/post/${dbPost.$id}`);
+      }
+    }
+  }
+
+  setIsLoading(false);
+  setIsOpen(false);
+};
 
     const slugTransform = useCallback((value) => {
         if (value && typeof value === "string")
