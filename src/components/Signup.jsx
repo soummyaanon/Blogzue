@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import authService from '../appwrite/auth'
 import { Link, useNavigate } from 'react-router-dom'
 import { login } from '../store/authSlice'
@@ -10,19 +10,7 @@ function Signup() {
   const navigate = useNavigate()
   const [error, setError] = useState("")
   const dispatch = useDispatch()
-  const { register, handleSubmit, formState: { errors }, watch, setError: setFormError } = useForm()
-
-  const email = watch('email');
-
-useEffect(() => {
-  if (email && (!email.endsWith('@gmail.com') || !email.endsWith('@yahoo.com') || !email.endsWith('@outlook.com'))) {
-    setFormError('email', {
-      type: 'endsWithValidDomain',
-      message: 'Email address must end with @gmail.com, @yahoo.com, or @outlook.com'
-    });
-    window.alert('Email address must end with @gmail.com, @yahoo.com, or @outlook.com');
-  }
-}, [email, setFormError]);
+  const { register, handleSubmit, formState: { errors }, setError: setFormError } = useForm()
 
   const create = async (data) => {
     setError("")
@@ -39,6 +27,14 @@ useEffect(() => {
   }
 
   const onSubmit = (data) => {
+    if (data.email && !(data.email.endsWith('@gmail.com') || data.email.endsWith('@yahoo.com') || data.email.endsWith('@outlook.com'))) {
+      setFormError('email', {
+        type: 'endsWithValidDomain',
+        message: 'Email address must end with @gmail.com, @yahoo.com, or @outlook.com'
+      });
+      window.alert('Email address must end with @gmail.com, @yahoo.com, or @outlook.com');
+      return;
+    }
     create(data);
   };
 
@@ -70,20 +66,18 @@ useEffect(() => {
               required: true,
             })}
           />
-<Input
-  label={<label className="text-white font-bold">Email: </label>}
-  placeholder="Enter your email"
-  type="email"
-  {...register("email", {
-    required: true,
-    validate: {
-      matchPatern: (value) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
-        "Email address must be a valid address",
-      endsWithValidDomain: (value) => value.endsWith('@gmail.com') || value.endsWith('@yahoo.com') || value.endsWith('@outlook.com') ||
-        "Email address must end with @gmail.com, @yahoo.com, or @outlook.com",
-    }
-  })}
-/>
+          <Input
+            label={<label className="text-white font-bold">Email: </label>}
+            placeholder="Enter your email"
+            type="email"
+            {...register("email", {
+              required: true,
+              validate: {
+                matchPatern: (value) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
+                  "Email address must be a valid address",
+              }
+            })}
+          />
           <Input
             label={<label className="text-white font-bold">Password: </label>}
             type="password"
