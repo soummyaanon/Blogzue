@@ -1,22 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Editor } from '@tinymce/tinymce-react';
 import { Controller } from 'react-hook-form';
 
 export default function RTE({ name, control, label, defaultValue = "" }) {
   const [charCount, setCharCount] = useState(0);
-  const [editor, setEditor] = useState(null);
-
-  useEffect(() => {
-    if (editor) {
-      editor.on('keydown', function (e) {
-        if (charCount >= 255) {
-          e.preventDefault();
-          e.stopPropagation();
-          return false;
-        }
-      });
-    }
-  }, [editor, charCount]);
 
   const handleEditorChange = (content) => {
     const chars = content.length;
@@ -24,8 +11,8 @@ export default function RTE({ name, control, label, defaultValue = "" }) {
   }
 
   return (
-    <div className='w-full'>
-      {label && <label className='inline-block mb-1 pl-1'>{label}</label>}
+    <div className='w-full' style={{ fontFamily: 'Arial, sans-serif', color: '#34495e' }}>
+      {label && <label className='inline-block mb-1 pl-1' style={{ fontWeight: 'bold' }}>{label}</label>}
 
       <Controller
         name={name || "content"}
@@ -37,14 +24,12 @@ export default function RTE({ name, control, label, defaultValue = "" }) {
             init={{
               initialValue: defaultValue,
               height: 300,
-              menubar: true,
+              menubar: false,
               plugins: [
-                "image",
                 "advlist",
                 "autolink",
                 "lists",
                 "link",
-                "image",
                 "charmap",
                 "preview",
                 "anchor",
@@ -61,10 +46,9 @@ export default function RTE({ name, control, label, defaultValue = "" }) {
                 "anchor",
               ],
               toolbar:
-                "undo redo | blocks | image | bold italic forecolor | alignleft aligncenter bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent |removeformat | help",
+                "undo redo | bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent |removeformat | help",
               content_style: "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }"
             }}
-            onInit={(event, editor) => setEditor(editor)}
             onEditorChange={(content) => {
               handleEditorChange(content);
               onChange(content);
@@ -73,7 +57,20 @@ export default function RTE({ name, control, label, defaultValue = "" }) {
         )}
       />
 
-      <p className='text-sm text-red-500'>{charCount > 255 ? 'Only 255 characters are allowed' : null}</p>
+<p style={{
+    fontSize: '12px',
+    color: '#ffffff',
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+    letterSpacing: '1px',
+    marginTop: '5px',
+    backgroundColor: '#c0392b',
+    padding: '5px',
+    borderRadius: '5px',
+    width: 'fit-content'
+}}>
+    {charCount > 255 ? 'Character limit exceeded!' : null}
+</p>
     </div>
   )
 }
