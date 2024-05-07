@@ -24,70 +24,82 @@ export default function PostForm({ post }) {
     const [isOpen, setIsOpen] = useState(false);
     const [isErrorPopupOpen, setIsErrorPopupOpen] = useState(false);
 
-    const submit = async (data) => {
-        if (!data.title || !data.slug || !data.content || !data.status || !data.image[0]) {
-            setIsErrorPopupOpen(true);
-            return;
+const submit = async (data) => {
+    if (!data.title || !data.slug || !data.content || !data.status || !data.image[0]) {
+        setIsErrorPopupOpen(true);
+        return;
+    }
+
+    setIsOpen(true);
+    setIsLoading(true);
+
+    try {
+        if (post) {
+            const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
+
+            console.log('File:', file);  // Log the file object
+
+            if (file) {
+                appwriteService.deleteFile(post.featuredImage);
+            }
+
+            const dbPost = await appwriteService.updatePost(post.$id, {
+                ...data,
+                featuredImage: file ? file.$id : undefined,
+            });
+
+            console.log('Data:', data);  // Log the data object
+
+            if (dbPost) {
+                navigate(`/post/${dbPost.$id}`);
+            }
+        } else {
+            const file = await appwriteService.uploadFile(data.image[0]);
+
+            console.log('File:', file);  // Log the file object
+
+            if (file) {
+                const fileId = file.$id;
+                data.featuredImage = fileId;
+                const dbPost = await appwriteService.createPost({ ...data, userId: userData.$id });
+
+                console.log('Data:', data);  // Log the data object
+
+                if (dbPost) {
+                    navigate(`/post/${dbPost.$id}`);
+                }
+            }
         }
-
-        setIsOpen(true);
-        setIsLoading(true);
-
-  if (post) {
-    const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
-
-    if (file) {
-      appwriteService.deleteFile(post.featuredImage);
+    } catch (error) {
+        console.error('File upload failed:', error);
     }
 
-    const dbPost = await appwriteService.updatePost(post.$id, {
-      ...data,
-      featuredImage: file ? file.$id : undefined,
-    });
-
-    if (dbPost) {
-      navigate(`/post/${dbPost.$id}`);
-    }
-  } else {
-    const file = await appwriteService.uploadFile(data.image[0]);
-
-    if (file) {
-      const fileId = file.$id;
-      data.featuredImage = fileId;
-      const dbPost = await appwriteService.createPost({ ...data, userId: userData.$id });
-
-      if (dbPost) {
-        navigate(`/post/${dbPost.$id}`);
-      }
-    }
-  }
-
-  setIsLoading(false);
-  setIsOpen(false);
+    setIsLoading(false);
+    setIsOpen(false);
 };
 
-const slugTransform = useCallback((value) => {
-    if (value && typeof value === "string")
-        return value
-            .trim()
-            .toLowerCase()
-            .replace(/[^a-zA-Z\d\s]+/g, "-")
-            .replace(/\s/g, "-");
+    const slugTransform = useCallback((value) => {
+        if (value && typeof value === "string")
+            return value
+                .trim()
+                .toLowerCase()
+                .replace(/[^a-zA-Z\d\s]+/g, "-")
+                .replace(/\s/g, "-");
 
-    return "";
-}, []);
+        return "";
+    }, []);
 
-React.useEffect(() => {
-    const subscription = watch((value, { name }) => {
-        if (name === "title") {
-            setValue("slug", slugTransform(value.title), { shouldValidate: true });
-        }
-    });
+    React.useEffect(() => {
+        const subscription = watch((value, { name }) => {
+            if (name === "title") {
+                setValue("slug", slugTransform(value.title), { shouldValidate: true });
+            }
+        });
 
-    return () => subscription.unsubscribe();
-}, [watch, slugTransform, setValue]);
+        return () => subscription.unsubscribe();
+    }, [watch, slugTransform, setValue]);
 
-return (
+    return (
     <form onSubmit={handleSubmit(submit)} className="flex flex-wrap bg-indigo-100 border-2 border-indigo-500 shadow-md rounded-lg p-6 justify-start">
         <div className="w-full md:w-2/3 px-2 mb-4 md:mb-0">
             <label className="block text-indigo-700 text-sm font-bold mb-2 text-left" htmlFor="title">
