@@ -27,7 +27,7 @@ function Login() {
     }
 
   return (
-<div className="flex items-center justify-center w-full bg-gray-900 h-screen">
+<div className="flex items-center justify-center w-full bg-gray-900 h-screen animate-fade-in">
     <div className="mx-auto w-full max-w-lg bg-gray-800 rounded-xl p-10 border-4 border-gray-700 border-opacity-75">
         <div className="mb-2 flex justify-center">
             <span className="inline-block w-full max-w-[100px]">
@@ -67,10 +67,12 @@ function Login() {
         required: true,
     })}
 />
-                <Button
-                type="submit"
-                className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                >Sign in</Button>
+<Button
+  type="submit"
+  className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transform active:scale-90"
+>
+  Sign in
+</Button>
             </div>
         </form>
     </div>
