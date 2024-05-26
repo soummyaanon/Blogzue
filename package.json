@@ -17,7 +17,7 @@
     "appwrite": "^13.0.2",
     "framer-motion": "^11.2.6",
     "html-react-parser": "^5.1.10",
-    "react": "^18.3.0",
+    "react": "^18.3.1",
     "react-dom": "^18.3.0",
     "react-hook-form": "^7.51.2",
     "react-icons": "^5.1.0",
@@ -26,7 +26,8 @@
     "react-router-dom": "^6.22.3",
     "react-social-icons": "^6.16.0",
     "reactjs-popup": "^2.0.6",
-    "styled-components": "^6.1.8"
+    "styled-components": "^6.1.8",
+    "three": "^0.164.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
