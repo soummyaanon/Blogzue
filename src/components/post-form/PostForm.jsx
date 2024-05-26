@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import { FaPaperPlane, FaSpinner, FaEdit } from 'react-icons/fa';
-
 export default function PostForm({ post }) {
     const { register, handleSubmit, watch, setValue, control, getValues } = useForm({
         defaultValues: {
@@ -15,6 +14,7 @@ export default function PostForm({ post }) {
             slug: post?.$id || "",
             content: post?.content || "",
             status: post?.status || "active",
+            catagory: post?.catagory || "", // Add this line
         },
     });
 
@@ -24,59 +24,60 @@ export default function PostForm({ post }) {
     const [isOpen, setIsOpen] = useState(false);
     const [isErrorPopupOpen, setIsErrorPopupOpen] = useState(false);
 
-const submit = async (data) => {
-    if (!data.title || !data.slug || !data.content || !data.status || !data.image[0]) {
-        setIsErrorPopupOpen(true);
-        return;
-    }
+    const submit = async (data) => {
+        if (!data.title || !data.slug || !data.content || !data.status || !data.image[0]) {
+            setIsErrorPopupOpen(true);
+            return;
+        }
 
-    setIsOpen(true);
-    setIsLoading(true);
+        setIsOpen(true);
+        setIsLoading(true);
 
-    try {
-        if (post) {
-            const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
+        try {
+            if (post) {
+                const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
 
-            console.log('File:', file);  // Log the file object
+                console.log('File:', file);  // Log the file object
 
-            if (file) {
-                appwriteService.deleteFile(post.featuredImage);
-            }
+                if (file) {
+                    appwriteService.deleteFile(post.featuredImage);
+                }
 
-            const dbPost = await appwriteService.updatePost(post.$id, {
-                ...data,
-                featuredImage: file ? file.$id : undefined,
-            });
-
-            console.log('Data:', data);  // Log the data object
-
-            if (dbPost) {
-                navigate(`/post/${dbPost.$id}`);
-            }
-        } else {
-            const file = await appwriteService.uploadFile(data.image[0]);
-
-            console.log('File:', file);  // Log the file object
-
-            if (file) {
-                const fileId = file.$id;
-                data.featuredImage = fileId;
-                const dbPost = await appwriteService.createPost({ ...data, userId: userData.$id });
+                const dbPost = await appwriteService.updatePost(post.$id, {
+                    ...data,
+                    catagory: data.catagory, // Add this line
+                    featuredImage: file ? file.$id : undefined,
+                });
 
                 console.log('Data:', data);  // Log the data object
 
                 if (dbPost) {
                     navigate(`/post/${dbPost.$id}`);
                 }
-            }
-        }
-    } catch (error) {
-        console.error('File upload failed:', error);
-    }
+            } else {
+                const file = await appwriteService.uploadFile(data.image[0]);
 
-    setIsLoading(false);
-    setIsOpen(false);
-};
+                console.log('File:', file);  // Log the file object
+
+                if (file) {
+                    const fileId = file.$id;
+                    data.featuredImage = fileId;
+                    const dbPost = await appwriteService.createPost({ ...data, userId: userData.$id, catagory: data.catagory }); // Add catagory here
+
+                    console.log('Data:', data);  // Log the data object
+
+                    if (dbPost) {
+                        navigate(`/post/${dbPost.$id}`);
+                    }
+                }
+            }
+        } catch (error) {
+            console.error('File upload failed:', error);
+        }
+
+        setIsLoading(false);
+        setIsOpen(false);
+    };
 
     const slugTransform = useCallback((value) => {
         if (value && typeof value === "string")
@@ -149,6 +150,7 @@ const submit = async (data) => {
             <label className="block text-indigo-700 text-sm font-bold mb-2 mt-4 text-left" htmlFor="status">
                 Status
             </label>
+
             <select
                 id="status"
                 className="shadow appearance-none border border-indigo-500 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -157,6 +159,27 @@ const submit = async (data) => {
                 <option value="active">Active</option>
                 <option value="inactive">Inactive</option>
             </select>
+
+            <label className="block text-indigo-700 text-sm font-bold mb-2 mt-4 text-left" htmlFor="catagory">
+  Category
+</label>
+<div className="relative">
+  <select
+    id="catagory"
+    className="block appearance-none w-full bg-white border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+    {...register("catagory", { required: true })}
+  >
+    <option value="Tech">Tech</option>
+    <option value="Lifestyle">Lifestyle</option>
+    <option value="Nature">Nature</option>
+    <option value="Science">Science</option>
+  </select>
+  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+    <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+      <path d="M10 12l-6-6h12l-6 6z" />
+    </svg>
+  </div>
+</div>
             <button type="submit" onClick={handleSubmit(submit)} className="relative flex justify-center items-center bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-700 hover:to-indigo-700 active:from-blue-800 active:to-indigo-800 text-white font-bold py-2 px-4 rounded mt-4 w-auto transition duration-150 ease-in-out transform hover:scale-105 active:scale-90">
                 {isLoading && <FaSpinner className="absolute animate-spin" />}
                 {!isLoading && (post ? <FaEdit className="ml-2" /> : <FaPaperPlane className="ml-2" />)}

@@ -14,45 +14,46 @@ export class Service {
     this.bucket = new Storage(this.client);
   }
 
-  async createPost({ title, slug, content, featuredImage, status, userId }) {
-    try {
-      return await this.databases.createDocument(
-        conf.appwriteDatabaseId,
-        conf.appwriteCollectionId,
-        ID.unique(),
-        {
-          title,
-          content,
-          featuredImage,
-          status,
-          userId,
-          slug,
-        }
-      );
-    } catch (error) {
-      console.log("Appwrite serive :: createPost :: error", error);
-    }
+  async createPost({ title, slug, content, featuredImage, status, userId, catagory }) {
+  try {
+    return await this.databases.createDocument(
+      conf.appwriteDatabaseId,
+      conf.appwriteCollectionId,
+      ID.unique(),
+      {
+        title,
+        content,
+        featuredImage,
+        status,
+        userId,
+        slug,
+        catagory, // Add this line
+      }
+    );
+  } catch (error) {
+    console.log("Appwrite serive :: createPost :: error", error);
   }
+}
 
-  async updatePost(id, { title, content, featuredImage, status, slug }) {
-    try {
-      return await this.databases.updateDocument(
-        conf.appwriteDatabaseId,
-        conf.appwriteCollectionId,
-        id,
-        {
-          title,
-          content,
-          featuredImage,
-          status,
-          slug,
-        }
-      );
-    } catch (error) {
-      console.log("Appwrite serive :: updatePost :: error", error);
-    }
+async updatePost(id, { title, content, featuredImage, status, slug, catagory }) {
+  try {
+    return await this.databases.updateDocument(
+      conf.appwriteDatabaseId,
+      conf.appwriteCollectionId,
+      id,
+      {
+        title,
+        content,
+        featuredImage,
+        status,
+        slug,
+        catagory, // Add this line
+      }
+    );
+  } catch (error) {
+    console.log("Appwrite serive :: updatePost :: error", error);
   }
-
+}
   async deletePost(slug) {
     try {
       await this.databases.deleteDocument(

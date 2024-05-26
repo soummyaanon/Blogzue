@@ -3,7 +3,7 @@ import appwriteService from "../appwrite/config"
 import {Link} from 'react-router-dom'
 import { motion } from 'framer-motion';
 
-function PostCard({$id, title, featuredImage }) {
+function PostCard({$id, title, featuredImage ,catagory}) {
   
   return (
     <Link to={`/post/${$id}`}>
@@ -25,6 +25,7 @@ function PostCard({$id, title, featuredImage }) {
           <img src={appwriteService.getFilePreview(featuredImage)} alt={title} className='w-full h-full object-cover rounded-xl' />
         </div>
         <h2 className='text-xl font-bold text-white'>{title}</h2>
+        <p className='text-sm text-white mt-2'>{catagory}</p> {/* Add this line */}
       </motion.div>
     </Link>
   )
