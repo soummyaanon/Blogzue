@@ -39,8 +39,8 @@ function Signup() {
   };
 
   return (
-<div className="flex items-center justify-center bg-gray-900 h-screen animate-fade-in">
-  <div className="mx-auto w-96 rounded-xl p-10 border-4 border-gray-700 border-opacity-75 shadow-lg bg-gray-800">
+<div className="flex items-center justify-center w-full bg-transparent backdrop-filter bg-black h-screen animate-fade-in">
+  <div className="mx-auto w-full max-w-lg bg-gray-800 rounded-xl p-10 border-4 border-gray-700 border-opacity-75">
     <div className="mb-2 flex justify-center">
       <span className="inline-block w-full max-w-[100px]">
         <Logo width="100%" />
