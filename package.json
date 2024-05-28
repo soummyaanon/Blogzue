@@ -17,6 +17,7 @@
     "appwrite": "^13.0.2",
     "framer-motion": "^11.2.6",
     "html-react-parser": "^5.1.10",
+    "html-to-text": "^9.0.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.0",
     "react-hook-form": "^7.51.2",
