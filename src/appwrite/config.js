@@ -27,7 +27,7 @@ export class Service {
         status,
         userId,
         slug,
-        catagory, // Add this line
+        catagory,
       }
     );
   } catch (error) {
