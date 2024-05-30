@@ -14,7 +14,7 @@ export default function PostForm({ post }) {
             slug: post?.$id || "",
             content: post?.content || "",
             status: post?.status || "active",
-            catagory: post?.catagory || "", // Add this line
+            catagory: post?.catagory || "", 
         },
     });
 
@@ -173,6 +173,15 @@ export default function PostForm({ post }) {
     <option value="Lifestyle">Lifestyle</option>
     <option value="Nature">Nature</option>
     <option value="Science">Science</option>
+    <option value="Health">Health</option>
+    <option value="Sports">Sports</option>
+    <option value="Travel">Travel</option>
+    <option value="Fashion">Fashion</option>
+    <option value="Food">Food</option>
+    <option value="Music">Music</option>
+    <option value="Movies">Movies</option>
+    <option value="Books">Books</option>
+
   </select>
   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
     <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
