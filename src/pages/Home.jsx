@@ -87,7 +87,7 @@ function Home() {
   <div>
     <div className='w-full py-8'></div>
     <Container>
-      <div className='flex items-center justify-center space-x-4'>
+    <div className='flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4'>
       <motion.img
         src={f1img}
         alt='First Image'
@@ -127,7 +127,7 @@ function Home() {
             placeholder='Search by category...'
             value={searchTerm}
             onChange={e => setSearchTerm(e.target.value)}
-            className='w-3/4 p-2 mb-4 h-18 rounded-full border- border-gray-300 text-white placeholder-gray-400 text-lg shadow-lg bg-transparent focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-colors duration-300 ease-in-out hover:bg-gray-800 hover:text-gray-200'
+            className='w-full sm:w-3/4 p-2 mb-4 h-18 rounded-full border- border-gray-300 text-white placeholder-gray-400 text-lg shadow-lg bg-transparent focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-colors duration-300 ease-in-out hover:bg-gray-800 hover:text-gray-200'
           />
           <div className='absolute mt-2 text-gray-500'>
             <p>Try: lifestyle, Technology, Science, Nature...</p>
