@@ -23,7 +23,7 @@ function App() {
   }, [dispatch])
   
 return !loading ? (
-  <div style={{ backdropFilter: 'blur(10px)' }} className='min-h-screen flex flex-col justify-between bg-gray-900 text-gray-200 bg-opacity-50'>
+  <div style={{ backdropFilter: 'blur(10px)' }} className='min-h-screen flex flex-col justify-between bg-black text-gray-200 bg-opacity-50'>
   <div className='w-full block'>
       <Header className='text-2xl font-bold p-4  transition-colors duration-200' />
       <main className='px-4 py-8'>
