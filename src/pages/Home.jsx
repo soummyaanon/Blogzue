@@ -5,6 +5,7 @@ import appwriteService from '../appwrite/config';
 import Container from '../components/container/Container';
 import authService from '../appwrite/auth';
 import { FaArrowRight } from 'react-icons/fa';
+import { DNA } from 'react-loader-spinner'; 
 
 // Import the images
 import f1img from '../assets/big-smile.webp';
@@ -42,9 +43,16 @@ function Home() {
 
   if (isLoading) {
     return (
-<div className="flex items-center justify-center h-screen">
-  <div className="loader"></div>
-</div>
+      <div className="flex items-center justify-center h-screen">
+        <DNA
+          visible={true}
+          height="100"
+          width="100"
+          ariaLabel="dna-loading"
+          wrapperStyle={{}}
+          wrapperClass="dna-wrapper"
+        />
+      </div>
     );
   }
 
